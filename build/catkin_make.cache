@@ -1,2 +1,0 @@
-
--DCATKIN_DEVEL_PREFIX=/home/algarverick/ME_495/homework_2/homework-2-algarv/devel -DCMAKE_INSTALL_PREFIX=/home/algarverick/ME_495/homework_2/homework-2-algarv/install -G Unix Makefiles
