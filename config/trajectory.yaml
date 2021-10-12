@@ -1,0 +1,5 @@
+Parameters: [3,5,15] 
+#[W, H, T]
+#W = width of the figure-eight
+#H = height of the figure-eight
+#T = time to finish one figure-eight (seconds)
