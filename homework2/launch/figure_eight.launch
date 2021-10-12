@@ -1,0 +1,5 @@
+<launch>
+    <node name="turtle_node" pkg="turtlesim" type="turtlesim_node" />
+    <node name="trajectory" pkg="homework-2-algarv" type="trajectory.py" />
+    <rosparam command="load" file="$(find homework-2-algarv)/config/trajectory.yaml" />
+</launch>
