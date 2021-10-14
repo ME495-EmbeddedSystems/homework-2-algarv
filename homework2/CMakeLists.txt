@@ -7,7 +7,10 @@ project(homework2)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+message_generation
+turtlesim
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -64,11 +67,11 @@ find_package(catkin REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-#generate_messages(
-#   DEPENDENCIES
-#   turtlesim
-#   std_msgs
-#)
+generate_messages(
+   DEPENDENCIES
+   turtlesim
+#  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -101,9 +104,9 @@ find_package(catkin REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-  LIBRARIES turtle_control
+#  LIBRARIES turtle_control
   CATKIN_DEPENDS turtlesim
-  CATKIN_DEPENDS std_msgs
+#  CATKIN_DEPENDS std_msgs
   CATKIN_DEPENDS message_runtime
 )
 
