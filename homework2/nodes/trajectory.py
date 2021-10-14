@@ -3,27 +3,24 @@ import rospy
 import numpy as np
 from geometry_msgs.msg import Twist,Vector3
 from turtlesim.msg import Pose
-
-
-def callback(data):
-    pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
-    t = rospy.get_time()
-    parameters = rospy.get_param("/Parameters")
-    W = parameters[0]
-    H = parameters[1]
-    T = parameters[2]
-    twist_value = Twist(Vector3(x=(W*np.pi/T)*np.cos(2*np.pi*t/T),y=(2*H*np.pi*t/T)*np.cos((4*np.pi*t)/T),z=0),Vector3(x=0,y=0,z=0))
-    pub.publish(twist_value)
-
-def main():
-    parameters = rospy.get_param("/Parameters")
-    rospy.Subscriber("turtle1/pose",Pose,callback)
-    W = parameters[0]
-    H = parameters[1]
-    T = parameters[2]
+from numpy import *
+from sympy import *
+  
 
 if __name__ == '__main__':
     rospy.init_node('trajectory')
-    rospy.Rate(500)
-    main()
+    parameters = rospy.get_param("/Parameters")
+    W = parameters[0]
+    H = parameters[1]
+    T = parameters[2]
+    r = rospy.Rate(200)
+    while not rospy.is_shutdown():
+        pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
+        t = rospy.get_time()
+        x_dot = (W*np.pi/T)*np.cos(2*np.pi*t/T)
+        y_dot = (2*H*np.pi/T)*np.cos((4*np.pi*t)/T)
+        w = -(4*pi*H*W*(sin((6*pi*t)/T)+3*sin((2*pi*t)/T)))/(T*(4*H**2*(cos((8*pi*t)/T)+1)+W**2*(cos((4*pi*t)/T)+1)))
+        twist_value = Twist(Vector3(x=sqrt(x_dot**2 + y_dot**2),y=0,z=0),Vector3(x=0,y=0,z=w))
+        pub.publish(twist_value)
+        r.sleep()  
     rospy.spin()
