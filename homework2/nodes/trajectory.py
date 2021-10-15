@@ -2,6 +2,7 @@
 import rospy
 import numpy as np
 import tf2_ros
+import tf
 from homework2.calc_trajectory import trajectory
 import geometry_msgs.msg
 from geometry_msgs.msg import Twist,Vector3
@@ -47,23 +48,25 @@ def static_transform():
 
     traj = trajectory(W,H,T)    
     
-    theta0_world = traj.theta0
+    theta0_world = traj.theta0()
 
-    static_broadcaster = tf2_ros.TransformBroadcaster()
+    quat = tf.transformations.quaternion_from_euler(0,0,theta0_world)
+
+    static_broadcaster = tf2_ros.StaticTransformBroadcaster()
 
     world_to_odom = geometry_msgs.msg.TransformStamped()
 
     world_to_odom.header.stamp = rospy.Time.now()
     world_to_odom.header.frame_id = "world"
-    world_to_odom.child_frame_id = "base_link"
+    world_to_odom.child_frame_id = "odom"
 
     world_to_odom.transform.translation.x = 0
     world_to_odom.transform.translation.y = 0
     world_to_odom.transform.translation.z = 0
-    world_to_odom.transform.rotation.x = 0
-    world_to_odom.transform.rotation.y = 0
-    world_to_odom.transform.rotation.z = theta0_world
-    world_to_odom.transform.rotation.w = 0
+    world_to_odom.transform.rotation.x = quat[0]
+    world_to_odom.transform.rotation.y = quat[1]
+    world_to_odom.transform.rotation.z = quat[2]
+    world_to_odom.transform.rotation.w = quat[3]
 
     static_broadcaster.sendTransform(world_to_odom)
 
