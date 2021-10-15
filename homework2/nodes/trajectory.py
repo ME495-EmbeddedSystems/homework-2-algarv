@@ -11,6 +11,17 @@ from homework2.srv import pause, resume
 from numpy import *
 from sympy import *
 
+global paused
+global restart
+global start_time
+global pause_time
+global pause_duration
+
+
+paused = False
+restart = 0
+pause_duration = 0
+pause_time = 0
 
 def Pause_Turtle(null):
     global paused
@@ -39,9 +50,9 @@ def Resume_Turtle(null):
     
     paused = False
     restart = 1
-
+    
     main()
-
+    
     return pause_duration - old_pause_duration
 
 def main():
@@ -61,7 +72,6 @@ def main():
     T = parameters[2]
 
     traj = trajectory(W,H,T)
-
 
     while not paused:
         if restart == 1:
@@ -85,17 +95,7 @@ if __name__ == '__main__':
     rospy.Service('Pause',pause,Pause_Turtle)
     rospy.Service('Resume',resume,Resume_Turtle)
 
-    global paused
-    global restart
-    global pause_duration
-    global start_time
-
-    paused = False
-    restart = 0
-    pause_duration = 0
-
     start_time = rospy.get_time()
-
     main()
 
     rospy.spin()
