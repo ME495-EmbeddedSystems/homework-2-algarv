@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-from sympy.multipledispatch.dispatcher import restart_ordering
 import rospy
 import numpy as np
+import tf2_ros
 from homework2.calc_trajectory import trajectory
+import geometry_msgs.msg
 from geometry_msgs.msg import Twist,Vector3
-from turtlesim.msg import Pose
-from std_srvs.srv import Empty, EmptyResponse
-from turtlesim.srv import TeleportAbsolute
 from homework2.srv import pause, resume
 from numpy import *
 from sympy import *
@@ -39,6 +37,35 @@ def Resume_Turtle(null):
         pause_duration = pause_duration
         
     return pause_duration - old_pause_duration
+
+def static_transform():
+    parameters = rospy.get_param("/Parameters")
+
+    W = parameters[0]
+    H = parameters[1]
+    T = parameters[2]
+
+    traj = trajectory(W,H,T)    
+    
+    theta0_world = traj.theta0
+
+    static_broadcaster = tf2_ros.TransformBroadcaster()
+
+    world_to_odom = geometry_msgs.msg.TransformStamped()
+
+    world_to_odom.header.stamp = rospy.Time.now()
+    world_to_odom.header.frame_id = "world"
+    world_to_odom.child_frame_id = "base_link"
+
+    world_to_odom.transform.translation.x = 0
+    world_to_odom.transform.translation.y = 0
+    world_to_odom.transform.translation.z = 0
+    world_to_odom.transform.rotation.x = 0
+    world_to_odom.transform.rotation.y = 0
+    world_to_odom.transform.rotation.z = theta0_world
+    world_to_odom.transform.rotation.w = 0
+
+    static_broadcaster.sendTransform(world_to_odom)
 
 def main():
     global pause_time
@@ -93,6 +120,8 @@ if __name__ == '__main__':
     pause_duration = 0
     pause_time = 0
     
+    static_transform()
+
     start_time = rospy.get_time()
     main()
 

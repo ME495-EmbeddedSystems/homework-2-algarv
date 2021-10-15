@@ -20,6 +20,10 @@ class trajectory():
         self.x_dot = x.diff(self.t)
         self.y_dot = y.diff(self.t)
     
+    def theta0(self,time):
+        theta0 = sqrt(self.x_dot**2 + self.x_dot**2)
+        return theta0
+
     def linear_velocity(self,time):
         v_eq = sqrt(self.x_dot**2 + self.y_dot**2) 
         v_func = sym.lambdify(self.t,v_eq,modules=sym)
