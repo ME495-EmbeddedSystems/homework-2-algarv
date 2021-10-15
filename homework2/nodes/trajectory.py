@@ -11,18 +11,6 @@ from homework2.srv import pause, resume
 from numpy import *
 from sympy import *
 
-global paused
-global restart
-global start_time
-global pause_time
-global pause_duration
-
-
-paused = False
-restart = 0
-pause_duration = 0
-pause_time = 0
-
 def Pause_Turtle(null):
     global paused
     global start_time
@@ -45,14 +33,11 @@ def Resume_Turtle(null):
 
     if paused == True:
         pause_duration = (rospy.get_time() - start_time - pause_time) + pause_duration
+        paused = False
+        restart = 1
     else: 
         pause_duration = pause_duration
-    
-    paused = False
-    restart = 1
-    
-    main()
-    
+        
     return pause_duration - old_pause_duration
 
 def main():
@@ -73,21 +58,23 @@ def main():
 
     traj = trajectory(W,H,T)
 
-    while not paused:
-        if restart == 1:
-            t = pause_time
-            restart = 0
-        else:
-            t = rospy.get_time() - start_time - pause_duration
+    while not rospy.is_shutdown():
+        print('Hello')
+        if not paused:
+            if restart == 1:
+                t = pause_time
+                restart = 0
+            else:
+                t = rospy.get_time() - start_time - pause_duration
 
 
-        v = traj.linear_velocity(t)
-        w = traj.angular_velocity(t)
-        twist_value = Twist(Vector3(x=v,y=0,z=0),Vector3(x=0,y=0,z=w))
+            v = traj.linear_velocity(t)
+            w = traj.angular_velocity(t)
+            twist_value = Twist(Vector3(x=v,y=0,z=0),Vector3(x=0,y=0,z=w))
 
-        pub.publish(twist_value)
+            pub.publish(twist_value)
 
-        r.sleep()
+            r.sleep()
 
 if __name__ == '__main__':
     rospy.init_node('trajectory')
@@ -95,6 +82,17 @@ if __name__ == '__main__':
     rospy.Service('Pause',pause,Pause_Turtle)
     rospy.Service('Resume',resume,Resume_Turtle)
 
+    global paused
+    global restart
+    global start_time
+    global pause_time
+    global pause_duration
+
+    paused = False
+    restart = 0
+    pause_duration = 0
+    pause_time = 0
+    
     start_time = rospy.get_time()
     main()
 
