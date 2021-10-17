@@ -117,6 +117,8 @@ if __name__ == '__main__':
     global start_time
     global pause_time
     global pause_duration
+    global start_x
+    global start_y
 
     paused = False
     restart = 0

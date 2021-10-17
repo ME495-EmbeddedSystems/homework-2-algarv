@@ -16,6 +16,7 @@ def dynamic_transform(Pose):
     theta_world = Pose.theta
     v_world = Pose.linear_velocity
     w_world = Pose.angular_velocity  
+    
     broadcaster = tf2_ros.TransformBroadcaster()
 
     quat = tf.transformations.quaternion_from_euler(0,0,theta_world)
@@ -26,10 +27,10 @@ def dynamic_transform(Pose):
 
     odom_to_baselink.header.stamp = rospy.Time.now()
     odom_to_baselink.header.frame_id = "odom"
-    odom_to_baselink.child_frame_id = "base_link"
+    odom_to_baselink.child_frame_id = "base_footprint"
 
-    odom_to_baselink.transform.translation.x = 0
-    odom_to_baselink.transform.translation.y = 0
+    odom_to_baselink.transform.translation.x = x_world
+    odom_to_baselink.transform.translation.y = y_world
     odom_to_baselink.transform.translation.z = 0
     odom_to_baselink.transform.rotation.x = quat[0]
     odom_to_baselink.transform.rotation.y = quat[1]
@@ -46,7 +47,7 @@ def dynamic_transform(Pose):
 
     odom.header.stamp = rospy.Time.now()
     odom.header.frame_id = 'odom'
-    odom.child_frame_id = 'base_link'
+    odom.child_frame_id = 'base_footprint'
     odom.pose.pose.position = Point(x_world, y_world, 0)
     odom.pose.pose.orientation.x = quat[0]
     odom.pose.pose.orientation.y = quat[1]
