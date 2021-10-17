@@ -17,8 +17,6 @@ def dynamic_transform(Pose):
     v_world = Pose.linear_velocity
     w_world = Pose.angular_velocity  
     
-    broadcaster = tf2_ros.TransformBroadcaster()
-
     quat = tf.transformations.quaternion_from_euler(0,0,theta_world)
 
     broadcaster = tf2_ros.TransformBroadcaster()

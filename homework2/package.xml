@@ -30,6 +30,7 @@
 
   <!-- The *depend tags are used to specify dependencies -->
   <depend> turtlesim </depend>
+  <depend>turtlebot3_msgs</depend>
   <!-- Dependencies can be catkin packages or system dependencies -->
   <!-- Examples: -->
   <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
@@ -37,8 +38,10 @@
   <!--   Note that this is equivalent to the following: -->
   <!-- build_depend>rospy</build_depend -->
   <exec_depend>rospy</exec_depend>
+  <exec_depend>turtlebot3_bringup</exec_depend>
   <!-- Use build_depend for packages you need at compile time: -->
   <build_depend>message_generation</build_depend>
+  <depend>nav_msgs</depend>
   <!-- Use build_export_depend for packages you need in order to build against this package: -->
   <!-- build_depend>std_msgs</build_depend -->
   <!-- build_export_depend>std_msgs</build_export_depend -->    <!-- CHECK HERE-->
