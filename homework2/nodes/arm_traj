@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+import sympy as sym
+import numpy as np
+from numpy import *
+from sympy import *
+
+pub = rospy.Publisher('sensor_msg/JointState ',joint_state,queue_size = 10)
+joints = JointState() 
+
+t = symbols('t')
+params = rospy.get_param("/arm")
+
+L1 = params.L1 
+L2 = params.L2
+
+h = 2*(L1 + L2)/3
+
+x = 0.9*cos((2*pi*t)/T)*sqrt((L1+L2)**2-h**2)
+y = 2*(L1+L2)/3
+
+joint.position = atan2(y,x)
+
+pub.publish(joint)

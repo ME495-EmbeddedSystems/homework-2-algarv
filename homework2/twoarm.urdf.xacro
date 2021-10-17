@@ -1,3 +1,14 @@
+<?xml version = "1.0"?>
+<robot name="Part2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:property name="arm" value = "$(find homework2)/config/arm.yaml" />
+<xacro:property name="arm value = '$(load_yaml(arm))'/>
+<xacro:property name="L1" value="${arm['L1']}"/>
+<xacro:property name="L2" value="${arm['L2']}"/>
+<xacro:property name="R1" value="${arm['R1']}"/>
+<xacro:property name="R2" value="${arm['R2']}"/>
+
+
 <link name="base" >
   <visual>
     <geometry>
@@ -24,7 +35,7 @@
   <visual>
    <origin xyz="0 0 0" rpy="0 0 0" />
    <geometry>
-     <cylinder radius="0.1" length="L1" />
+     <cylinder radius="0.1" length="${L1}" />
    </geometry>
      <material name="blue_mat">
          <color rgba="0 0 1 1" />
@@ -34,7 +45,7 @@
   <collision>
      <origin xyz="0 0 0" rpy="0 0 0" />
    <geometry>
-     <cylinder radius="0.1" length="L1" />
+     <cylinder radius="0.1" length="${L1}" />
    </geometry>
    </collision>
 </link>
@@ -48,7 +59,7 @@
   <visual>
   <origin xyz="0 0 0" rpy="0 0 0" />
    <geometry>
-     <cylinder radius="0.1" length="L2" />
+     <cylinder radius="0.1" length="${L2}" />
    </geometry>
      <material name="red_mat">
          <color rgba="1 0 0 1" />
@@ -72,3 +83,5 @@
      </material>
    </visual>
 </link>
+
+</robot>

@@ -10,6 +10,8 @@ project(homework2)
 find_package(catkin REQUIRED COMPONENTS
 message_generation
 turtlesim
+sensor_msgs
+std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
