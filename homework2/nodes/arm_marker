@@ -22,7 +22,6 @@ def main():
     marker.scale.z = 1.0
 
     if x > 0:
-
         marker.type = 2
 
         marker.color.r = 0.0
@@ -31,7 +30,6 @@ def main():
         marker.color.a = 1.0
 
     else:
-        marker.header.stamp = rospy.Time.now()  
         marker.type = 1
 
         marker.color.r = 0.75

@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find homework2)/launch/arm_basics.launch" />
+    <node name="arm_traj" pkg="homework2" type="arm_traj" />
+    <!-- <node name='arm_marker' pkg="homework2" type="arm_marker" /> -->
+    <rosparam command ="load" file = "$(find homework2)/config/arm.yaml"/>
+</launch>

@@ -8,38 +8,39 @@ from sympy import *
 from sensor_msgs.msg import JointState
 
 def main():
-    pub = rospy.Publisher('joint_states', JointState, queue_size = 10)
-    
-    joints = JointState() 
+    while not rospy.is_shutdown():
+        pub = rospy.Publisher('joint_states', JointState, queue_size = 10)
+        
+        joints = JointState() 
 
-    t = rospy.get_time()
+        t = rospy.get_time()
 
-    L1 = rospy.get_param("L1")
-    L2 = rospy.get_param("L2")
-    T = rospy.get_param("T")
+        L1 = rospy.get_param("L1")
+        L2 = rospy.get_param("L2")
+        T = rospy.get_param("T")
 
-    h = 2*(L1 + L2)/3
+        h = 2*(L1 + L2)/3
 
-    x = 0.9*cos((2*pi*t)/T)*sqrt((L1+L2)**2-h**2)
-    y = 2*(L1+L2)/3
+        x = 0.9*cos((2*pi*t)/T)*sqrt((L1+L2)**2-h**2)
+        y = 2*(L1+L2)/3
 
-    beta = acos((L1**2+L2**2-x**2-y**2)/(2*L1*L2))
+        beta = acos((L1**2+L2**2-x**2-y**2)/(2*L1*L2))
 
-    alpha = acos((x**2+y**2+L1**2-L2**2)/(2*L1*sqrt(x**2+y**2)))
+        alpha = acos((x**2+y**2+L1**2-L2**2)/(2*L1*sqrt(x**2+y**2)))
 
-    g = atan2(y,x)
+        g = atan2(y,x)
 
-    theta1 = g - alpha
+        theta1 = g - alpha
 
-    theta2 = pi - beta
-    
-    joints.header.stamp = rospy.Time.now() 
-    joints.name = ['joint_1', 'joint_2']
-    joints.position = [theta1,theta2]
-    joints.velocity = [0,0]
-    joints.effort = [0,0]
+        theta2 = pi - beta
+        
+        joints.header.stamp = rospy.Time.now() 
+        joints.name = ['joint_1', 'joint_2']
+        joints.position = [theta1,theta2]
+        joints.velocity = [0,0]
+        joints.effort = [0,0]
 
-    pub.publish(joints)
+        pub.publish(joints)
 
 if __name__ == '__main__':
     rospy.init_node('arm_traj')

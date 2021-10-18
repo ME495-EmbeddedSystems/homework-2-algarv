@@ -16,7 +16,8 @@ def Pause_Turtle(null):
     global pause_time
 
     pause_time = rospy.get_time() - start_time 
-    pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
+    #pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
+    pub = rospy.Publisher('/cmd_vel',Twist,queue_size = 10)
     pub.publish(Twist(Vector3(x=0,y=0,z=0),Vector3(x=0,y=0,z=0)))
     paused = True
 
@@ -80,9 +81,9 @@ def main():
     r = rospy.Rate(50)
 
     parameters = rospy.get_param("/Parameters")
-    pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
-    #pub = rospy.Publisher('cmd_vel',Twist,queue_size = 10)
-
+    #pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
+    pub = rospy.Publisher('cmd_vel',Twist,queue_size = 10)
+    
     W = parameters[0]
     H = parameters[1]
     T = parameters[2]
@@ -120,7 +121,7 @@ if __name__ == '__main__':
     global start_x
     global start_y
 
-    paused = False
+    paused = True
     restart = 0
     pause_duration = 0
     pause_time = 0

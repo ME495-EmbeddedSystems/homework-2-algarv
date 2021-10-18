@@ -1,9 +1,17 @@
 <launch>
-    <rosparam command ="load" file = "$(find homework2)/config/arm.yaml"/>
-    <node name="rviz" pkg ="rviz" type="rviz" />
-    <param name="robot_description" command="$(find xacro)/xacro $(find homework2)/twoarm.urdf.xacro"/>    
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
-    <node name="arm_traj" pkg="homework2" type="arm_traj" />
-    <node name='arm_marker' pkg="homework2" type="arm_marker" />
+    <arg name="use_jsp" default = 'false' />
+
+    <group if="$(eval arg ('use_jsp') == 'false')">
+        <node name="rviz" pkg ="rviz" type="rviz" />
+        <param name="robot_description" command="$(find xacro)/xacro $(find homework2)/twoarm.urdf.xacro"/>    
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    </group>
+
+    <group if="$(eval arg ('use_jsp') == 'true ')">
+        <param name="robot_description" command="$(find xacro)/xacro $(find homework2)/twoarm.urdf.xacro"/>    
+        <node name="rviz" pkg ="rviz" type="rviz" />
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+        <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
+    </group>
+
 </launch>
