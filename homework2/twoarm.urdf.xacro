@@ -97,7 +97,6 @@
 </joint>
 
 <link name="end">
-
   <visual>
   <origin xyz=".05 0 0" rpy="0 1.571 0" />
    <geometry>

@@ -5,4 +5,5 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
     <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
     <node name="arm_traj" pkg="homework2" type="arm_traj" />
+    <node name='arm_marker' pkg="homework2" type="arm_marker" />
 </launch>

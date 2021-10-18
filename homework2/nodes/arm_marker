@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+import rospy
+import tf2_ros
+import geometry_msgs.msg
+from visualization_msgs.msg import Marker
+
+def main():
+    pub = rospy.Publisher('Marker', Marker, queue_size=10)
+
+    buffer = tf2_ros.Buffer()
+    listener = tf2_ros.TransformListener(buffer)
+    trans = buffer.lookup_transform("base", "end", rospy.Time())
+
+    x = trans.transform.translation.x
+
+    marker = Marker()
+    marker.id = 1
+    marker.header.stamp = rospy.Time.now()  
+    marker.scale.x = 1.0
+    marker.scale.y = 1.0
+    marker.scale.z = 1.0
+
+    if x > 0:
+
+        marker.type = 2
+
+        marker.color.r = 0.0
+        marker.color.g = 0.75
+        marker.color.b = 0.25
+        marker.color.a = 1.0
+
+    else:
+        marker.header.stamp = rospy.Time.now()  
+        marker.type = 1
+
+        marker.color.r = 0.75
+        marker.color.g = 0.0
+        marker.color.b = 0.25
+        marker.color.a = 1.0
+
+if __name__ == '__main__':
+    rospy.init_node('arm_marker') 
+    main()
+    rospy.spin()
+
+

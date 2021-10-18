@@ -167,6 +167,7 @@ catkin_install_python(PROGRAMS
    nodes/trajectory.py
    nodes/simodom.py
    nodes/arm_traj
+   nodes/arm_marker
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
