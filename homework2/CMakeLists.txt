@@ -203,8 +203,8 @@ catkin_install_python(PROGRAMS
 #############
 
 if(CATKIN_ENABLE_TESTING)
-   catkin_add_nosetests(/test) 
+   catkin_add_nosetests(test) 
 endif()
 
 ## Add folders to be run by python nosetests
-catkin_add_nosetests(test)
+#catkin_add_nosetests(test)

@@ -80,8 +80,8 @@ def main():
     r = rospy.Rate(50)
 
     parameters = rospy.get_param("/Parameters")
-    #pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
-    pub = rospy.Publisher('cmd_vel',Twist,queue_size = 10)
+    pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
+    #pub = rospy.Publisher('cmd_vel',Twist,queue_size = 10)
 
     W = parameters[0]
     H = parameters[1]
@@ -90,7 +90,6 @@ def main():
     traj = trajectory(W,H,T)
 
     while not rospy.is_shutdown():
-        print('Hello')
         if not paused:
             if restart == 1:
                 t = pause_time
