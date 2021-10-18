@@ -14,10 +14,17 @@ def Pause_Turtle(null):
     global paused
     global start_time
     global pause_time
+    global mode
 
     pause_time = rospy.get_time() - start_time 
-    #pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
-    pub = rospy.Publisher('/cmd_vel',Twist,queue_size = 10)
+    
+    if mode == 'sim':
+        pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
+    elif mode == 'real':
+        pub = rospy.Publisher('/cmd_vel',Twist,queue_size = 10)
+    else:
+        rospy.loginfo('Uknown mode')
+    
     pub.publish(Twist(Vector3(x=0,y=0,z=0),Vector3(x=0,y=0,z=0)))
     paused = True
 
@@ -77,12 +84,18 @@ def main():
     global pause_duration
     global start_time
     global paused
+    global mode
 
     r = rospy.Rate(50)
 
     parameters = rospy.get_param("/Parameters")
-    #pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
-    pub = rospy.Publisher('cmd_vel',Twist,queue_size = 10)
+
+    if mode == 'sim':
+        pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
+    elif mode == 'real':
+        pub = rospy.Publisher('cmd_vel',Twist,queue_size = 10)
+    else:
+        rospy.loginfo("Unknown mode")
     
     W = parameters[0]
     H = parameters[1]
@@ -120,12 +133,14 @@ if __name__ == '__main__':
     global pause_duration
     global start_x
     global start_y
+    global mode
 
     paused = True
     restart = 0
     pause_duration = 0
     pause_time = 0
-    
+    mode = rospy.get_param("mode")
+
     static_transform()
 
     start_time = rospy.get_time()

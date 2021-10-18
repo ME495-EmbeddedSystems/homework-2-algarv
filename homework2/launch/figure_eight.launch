@@ -2,6 +2,7 @@
     <arg name="mode" default = 'sim' />
     
     <group if="$(eval arg ('mode') == 'sim')">
+        <param name="mode" type="string" value="sim" />
         <rosparam command="load" file="$(find homework2)/config/trajectory.yaml" />
         <node name="turtle_node" pkg="turtlesim" type="turtlesim_node" />
         <node name="rviz" pkg ="rviz" type="rviz" />
@@ -10,6 +11,7 @@
     </group>
 
     <group if="$(eval arg ('mode') == 'real')">
+        <param name="mode" type="string" value="real" />
         <rosparam command="load" file="$(find homework2)/config/trajectory.yaml" />
         <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
