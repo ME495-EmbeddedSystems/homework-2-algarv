@@ -1,11 +1,21 @@
 <launch>
-    <node name="turtle_node" pkg="turtlesim" type="turtlesim_node" />
-    <node name="rviz" pkg ="rviz" type="rviz" />
-    <node name="trajectory" pkg="homework2" type="trajectory.py" />
-    <node name="simodom" pkg="homework2" type="simodom.py" />
-    <arg name="mode" default = "sim" />
-    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro"/>
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
-    <rosparam command="load" file="$(find homework2)/config/trajectory.yaml" />
+    <arg name="mode" default = 'sim' />
+    
+    <group if="$(eval arg ('mode') == 'sim')">
+        <rosparam command="load" file="$(find homework2)/config/trajectory.yaml" />
+        <node name="turtle_node" pkg="turtlesim" type="turtlesim_node" />
+        <node name="rviz" pkg ="rviz" type="rviz" />
+        <node name="trajectory" pkg="homework2" type="trajectory.py" />
+        <node name="simodom" pkg="homework2" type="simodom.py" />
+    </group>
+
+    <group if="$(eval arg ('mode') == 'real')">
+        <rosparam command="load" file="$(find homework2)/config/trajectory.yaml" />
+        <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro"/>
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+        <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
+        <node name="rviz" pkg ="rviz" type="rviz" />
+        <node name="trajectory" pkg="homework2" type="trajectory.py" />
+    </group>
+
 </launch>
