@@ -1,18 +1,11 @@
 <?xml version = "1.0"?>
 <robot name="Part2" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:property name="arm" value = "$(find homework2)/config/arm.yaml" />
-<xacro:property name="arm value = '$(load_yaml(arm))'/>
-<xacro:property name="L1" value="${arm['L1']}"/>
-<xacro:property name="L2" value="${arm['L2']}"/>
-<xacro:property name="R1" value="${arm['R1']}"/>
-<xacro:property name="R2" value="${arm['R2']}"/>
-
-
 <link name="base" >
   <visual>
+    <origin xyz="0 0 0" rpy="0 1.571 0" />
     <geometry>
-      <sphere radius="0.1" />
+     <sphere radius="0.1" />
      </geometry>
      <material name="green_mat">
          <color rgba="0 1 0 1" />
@@ -21,21 +14,22 @@
 </link>
 
 <joint name="base_joint" type="continuous">
-  <parent link="L1" />
-  <child link="L2" />
+  <parent link="base" />
+  <child link="L1" />
+  <origin xyz=".1 0 0" rpy="0 0 0" />
 </joint>
 
 <link name="L1">
    <inertial>
-     <origin xyz="0 0 0.5" rpy="0 0 0"/>
+     <origin xyz=".5 0 0" rpy="0 1.571 0"/>
      <mass value="1"/>
      <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
    </inertial>
   
   <visual>
-   <origin xyz="0 0 0" rpy="0 0 0" />
+   <origin xyz=".5 0 0" rpy="0 1.571 0" />
    <geometry>
-     <cylinder radius="0.1" length="${L1}" />
+     <cylinder radius="0.1" length="1" />
    </geometry>
      <material name="blue_mat">
          <color rgba="0 0 1 1" />
@@ -43,9 +37,9 @@
   </visual>
 
   <collision>
-     <origin xyz="0 0 0" rpy="0 0 0" />
+     <origin xyz=".5 0 0" rpy="0 1.571 0" />
    <geometry>
-     <cylinder radius="0.1" length="${L1}" />
+     <cylinder radius="0.1" length="1" />
    </geometry>
    </collision>
 </link>
@@ -53,35 +47,53 @@
 <joint name="joint" type="continuous">
   <parent link="L1" />
   <child link="L2" />
+  <origin xyz="1 0 0" rpy="0 0 0" />
 </joint>
 
 <link name="L2">
+   <inertial>
+     <origin xyz="1 0 0" rpy="0 1.571 0"/>
+     <mass value="1"/>
+     <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+   </inertial>
+
+
   <visual>
-  <origin xyz="0 0 0" rpy="0 0 0" />
+  <origin xyz="1 0 0" rpy="0 1.571 0" />
    <geometry>
-     <cylinder radius="0.1" length="${L2}" />
+     <cylinder radius="0.1" length="2" />
    </geometry>
      <material name="red_mat">
          <color rgba="1 0 0 1" />
      </material>
    </visual>
+  
+  <collision>
+     <origin xyz="1 0 0" rpy="0 1.571 0" />
+   <geometry>
+     <cylinder radius="0.1" length="2" />
+   </geometry>
+   </collision>  
 </link>
 
 <joint name="end_joint" type="fixed">
   <parent link="L2" />
   <child link="end" />
+  <origin xyz="2 0 0" rpy="0 0 0" />
 </joint>
 
 <link name="end">
+
   <visual>
-  <origin xyz="0 0 0" rpy="0 0 0" />
+  <origin xyz=".05 0 0" rpy="0 1.571 0" />
    <geometry>
      <cylinder radius="0.1" length=".1" />
    </geometry>
-     <material name="red_mat">
-         <color rgba="1 0 0 1" />
+     <material name="cyan_mat">
+         <color rgba="0 .5 .5 1" />
      </material>
    </visual>
+  
 </link>
 
 </robot>

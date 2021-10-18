@@ -166,6 +166,7 @@ catkin_install_python(PROGRAMS
    #scripts/my_python_script
    nodes/trajectory.py
    nodes/simodom.py
+   nodes/arm_traj
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

@@ -1,5 +1,5 @@
 <launch>
-    <rosparam name='arm.yaml' pkg='homework2'/>
+    <rosparam command ="load" file = "$(find homework2)/config/arm.yaml"/>
     <node name="rviz" pkg ="rviz" type="rviz" />
     <param name="robot_description" command="$(find xacro)/xacro $(find homework2)/twoarm.urdf.xacro"/>    
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
