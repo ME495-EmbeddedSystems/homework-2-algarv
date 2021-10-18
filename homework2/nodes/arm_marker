@@ -6,36 +6,59 @@ import geometry_msgs.msg
 from visualization_msgs.msg import Marker
 
 def main():
-    pub = rospy.Publisher('Marker', Marker, queue_size=10)
-
+    r = rospy.Rate(1000)
+    i=0
+    pub = rospy.Publisher('visualization_marker', Marker, queue_size=10)
     buffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(buffer)
-    trans = buffer.lookup_transform("base", "end", rospy.Time())
+    while not rospy.is_shutdown():
+        
+        try:
+            trans = buffer.lookup_transform("base", "end", rospy.Time())
+        except: 
+            continue
 
-    x = trans.transform.translation.x
+        x = trans.transform.translation.x
 
-    marker = Marker()
-    marker.id = 1
-    marker.header.stamp = rospy.Time.now()  
-    marker.scale.x = 1.0
-    marker.scale.y = 1.0
-    marker.scale.z = 1.0
+        marker = Marker()
+        marker.header.frame_id = 'end'
+        marker.header.stamp = rospy.Time.now() 
+        marker.id = i
+        marker.lifetime = rospy.Duration(1)
+        marker.action = Marker.ADD 
+        marker.scale.x = .10
+        marker.scale.y = .10
+        marker.scale.z = .10
 
-    if x > 0:
-        marker.type = 2
+        if x > 0:
+            marker.type = Marker.SPHERE
 
-        marker.color.r = 0.0
-        marker.color.g = 0.75
-        marker.color.b = 0.25
-        marker.color.a = 1.0
+            marker.color.r = 0.0
+            marker.color.g = 0.75
+            marker.color.b = 0.25
+            marker.color.a = 1.0
 
-    else:
-        marker.type = 1
+        else:
+            marker.type = Marker.CUBE
 
-        marker.color.r = 0.75
-        marker.color.g = 0.0
-        marker.color.b = 0.25
-        marker.color.a = 1.0
+            marker.color.r = 0.75
+            marker.color.g = 0.0
+            marker.color.b = 0.25
+            marker.color.a = 1.0
+        
+        marker.pose.position.x = 0
+        marker.pose.position.y = 0
+        marker.pose.position.z = 0
+        
+        marker.pose.orientation.x = 0.0
+        marker.pose.orientation.y = 0.0
+        marker.pose.orientation.z = 0.0
+        marker.pose.orientation.w = 1.0
+        
+        pub.publish(marker)
+        
+        i += 1
+        r.sleep()
 
 if __name__ == '__main__':
     rospy.init_node('arm_marker') 
