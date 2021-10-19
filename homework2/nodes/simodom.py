@@ -1,4 +1,21 @@
 #!/usr/bin/env python
+
+## SIMODOM NODE ##
+'''
+The simodom node broadcasts a transform from the odom frame to the base_footprint frame, and then 
+publishes an odometry message to simulate the odometry of the TurtleBot.
+
+Subscribers:
+    Name: turtle1/Pose Type: turtlesim/Pose ~ Returns the turtle position in the world frame
+
+Publishers:
+    Name: nav_msgs/Odometry Type: nav_msgs/Odometry ~ Sends position and orientation values to the odometry
+        message in the odometry and base_footprint frames
+
+Broadcasters:
+    Name: tf Type: tf2_msgs/TFMessage ~ Broadcasts the transform between the odometry and base_footprint frames
+'''
+
 import rospy
 import tf2_ros
 import tf
@@ -11,6 +28,10 @@ from turtlesim.msg import Pose
 from nav_msgs.msg import Odometry
 
 def dynamic_transform(Pose):
+    '''
+    Recieves information from the Pose subsriber a broadcasts a transform between the odom and base_footprint frames,
+    then publishes to the odometry message to simulate the TurtleBot motion in rviz.
+    '''
     x_world = Pose.x
     y_world = Pose.y
     theta_world = Pose.theta

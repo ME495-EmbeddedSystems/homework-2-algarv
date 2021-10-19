@@ -1,4 +1,31 @@
 #!/usr/bin/env python
+
+## TRAJECTORY NODE ##
+'''
+The trajectory node uses the functions described in the calc_trajectory module to calculate the linear and angular velocity
+of the turtle, and publishes the corresponding twist message to either turtlesim or turtlebot depending on the mode specified
+in the launch file. Additionally, pause and resume services are defined to start and stop the turtle's motion while maintaining
+the trajectory, and finally, a static transform is broadcasted between the world and odometry frames.
+
+Custom Services:
+    Name: /Pause Type: homework2/Pause ~ Stops turtle motion and records the pause time
+
+    Name: /Resume Type: homework2/Resume ~ Restarts the turtle at the pause time 
+
+Publishers:
+    Name: turtle1/cmd_vel Type: geometry_msgs/Twist ~ Sends a twist message to move the turtlesim turtle
+
+    Name: cmd_vel Type: geometry_msgs/Twist ~ Sends a twist message to move the TurtleBot robot
+
+Broadcasters:
+    Name: tf_static Type: tf2_msgs/TFMessage ~ Broadcasts the static transform between the world and odometry frames
+
+Parameters: 
+    Name: /Parameters ~ Figure 8 dimensions and period
+
+    Name: /Trajectory/~freq ~ Private parameter for publishing frequency
+'''
+
 import rospy
 import numpy as np
 import tf2_ros
@@ -11,6 +38,10 @@ from numpy import *
 from sympy import *
 
 def Pause_Turtle(null):
+    '''
+    Called with the Pause service. Publishes 0 velocities to stop turtle movement and sets paused to True. 
+    Takes no arguments, returns the pause time.
+    '''
     global paused
     global start_time
     global pause_time
@@ -31,6 +62,10 @@ def Pause_Turtle(null):
     return pause_time
 
 def Resume_Turtle(null):
+    '''
+    Called with the Resume service. Resets paused to false and calculates total pause time.
+    Takes no arguments, returns the latest pause duration but adds to the value of total pause_duration.
+    '''
     global pause_duration
     global start_time
     global paused
@@ -48,6 +83,9 @@ def Resume_Turtle(null):
     return pause_duration - old_pause_duration
 
 def static_transform():
+    '''
+    Broadcasts a static transform between the world and odomtery frames. No arguments, no returns.
+    '''
     parameters = rospy.get_param("/Parameters")
 
     W = parameters[0]
@@ -79,6 +117,11 @@ def static_transform():
     static_broadcaster.sendTransform(world_to_odom)
 
 def main():
+    '''
+    Imports the trajectory functions from the calc_trajectory modules and the W, H, and T values from the 
+    trajectory parameters and uses the imports to publish a linear and angular velocity to the turtle. No
+    arguments, no returns.
+    '''
     global pause_time
     global restart
     global pause_duration
