@@ -168,6 +168,7 @@ catkin_install_python(PROGRAMS
    nodes/simodom.py
    nodes/arm_traj
    nodes/arm_marker
+   srv/pause.srv
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
