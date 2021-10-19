@@ -6,7 +6,9 @@
         <rosparam command="load" file="$(find homework2)/config/trajectory.yaml" />
         <node name="turtle_node" pkg="turtlesim" type="turtlesim_node" />
         <node name="rviz" pkg ="rviz" type="rviz" args="-d $(find homework2)/config/turtle_view.rviz"/>
-        <node name="trajectory" pkg="homework2" type="trajectory.py" />
+        <node name="trajectory" pkg="homework2" type="trajectory.py"> 
+             <rosparam command="load" file="$(find homework2)/config/pub_freq.yaml"/>
+        </node>
         <node name="simodom" pkg="homework2" type="simodom.py" />
     </group>
 

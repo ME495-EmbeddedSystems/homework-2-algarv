@@ -24,7 +24,10 @@ The dimensions of the figure eight may be editted in the trajectory.yaml file, w
 
 ![Figure-Eight Gif](figure8.gif)
 
-With the real mode, velocity messages are instead sent to the TurtleBot hardware. The TurtleBot will follow the same path as the turtle in the simulation, with some discreptancies due to the realities of a robot existing in the 'real world.' The values in the parameter file should be updating according to space limitations (distance values are in meters), and the period should be long enough to allow the bot to follow all the movement commands (around 45 seconds should work).  
+With the real mode, velocity messages are instead sent to the TurtleBot hardware. The TurtleBot will follow the same path as the turtle in the simulation, with some discreptancies due to the realities of a robot existing in the 'real world.' The values in the parameter file should be updating according to space limitations (distance values are in meters), and the period should be long enough to allow the bot to follow all the movement commands (around 45 seconds should work).  It is necessary to clone the turlebot3 and turtlebot3/msgs repositories into the base directory of the package to run this mode. 
+
+    roslaunch homework2 figure_eight.launch mode:=real
+
 
 **TurtleBot video: 
 https://youtu.be/zBIMHzM5mfM**

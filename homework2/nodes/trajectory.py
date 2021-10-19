@@ -86,7 +86,8 @@ def main():
     global paused
     global mode
 
-    r = rospy.Rate(50)
+    f = rospy.get_param("~freq")
+    r = rospy.Rate(f)
 
     parameters = rospy.get_param("/Parameters")
 
