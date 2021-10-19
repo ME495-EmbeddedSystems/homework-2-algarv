@@ -21,9 +21,11 @@ Broadcasters:
     Name: tf_static Type: tf2_msgs/TFMessage ~ Broadcasts the static transform between the world and odometry frames
 
 Parameters: 
-    Name: /Parameters ~ Figure 8 dimensions and period
+    Name: /mode File: figure_eight.launch ~ Conditional variable to toggle the two cmd_vel publishers
 
-    Name: /Trajectory/~freq ~ Private parameter for publishing frequency
+    Name: /Parameters File: trajectory.yaml ~ Figure 8 dimensions and period
+
+    Name: /Trajectory/~freq File: pub_freq.yaml ~ Private parameter for publishing frequency
 '''
 
 import rospy

@@ -1,11 +1,29 @@
 #!/usr/bin/env python
 
+## ARM_MARKER NODE ##
+'''
+The arm_marker node uses a tf listener to find the x position of the end effector and publish a marker. The
+marker is colored according to the sign of the x value, eg. a green sphere for positive and a red cube for negative.
+
+Publishers:
+    Name: /visualization_marker Type: visualization_msgs/Marker ~ Publishes color-coded markers at the end effector position
+
+Listeners:
+    Name: tf Type:f2_msgs/TFMessage ~ Recieves the transform between the base to end effector from the robot state publisher
+
+Parameters: 
+    Name: T File: arm.yaml ~ Period of arm movement cycle
+'''
+
 import rospy
 import tf2_ros
 import geometry_msgs.msg
 from visualization_msgs.msg import Marker
 
 def main():
+    '''
+    Publishes green sphere or red cube markers at the end effector position using the transform found with the listener. 
+    '''
     T = rospy.get_param("T")
     r = rospy.Rate(15)
     i=0

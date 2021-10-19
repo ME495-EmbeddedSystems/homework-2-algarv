@@ -7,7 +7,28 @@ from numpy import *
 from sympy import *
 from sensor_msgs.msg import JointState
 
+## ARM_TRAJ NODE ##
+'''
+The arm_traj node uses inverse kinematics to publish joint states to the robot arm defined in the twoarm.urdf.xacro file and
+make its end effector follow a linear path.
+
+Publishers:
+    Name: joint_states Type: sensor_msgs/JointState ~ Publishes joint positions to each joint in the robot arm
+
+Parameters: 
+    Name: L1 File: arm.yaml ~ Length of first link
+    Name: L2 File: arm.yaml ~ Lenght of second link
+    Name: R1 File: arm.yaml ~ Radius of first link
+    Name: R2 File: arm.yaml ~ Radius of second link
+    Name: T File: arm.yaml ~ Period of arm movement cycle
+'''
+
 def main():
+    '''
+    Continuously updates the target position of the end effector with a time variable and the given x and y equations,
+    uses the inverse kinematics equations to calculate the joint position of each joint, and finally publishes
+    the joint information to JointState.
+    '''
     while not rospy.is_shutdown():
         pub = rospy.Publisher('joint_states', JointState, queue_size = 10)
         
