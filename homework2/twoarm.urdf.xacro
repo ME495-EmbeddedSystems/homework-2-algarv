@@ -65,7 +65,7 @@
   <parent link="L1" />
   <child link="L2" />
   <axis xyz = "0 0 1" />
-  <origin xyz="1 0 0" rpy="0 0 0" />
+  <origin xyz="${L1} 0 0" rpy="0 0 0" />
 </joint>
 
 <link name="L2">
@@ -78,7 +78,7 @@
 
 
   
-  <origin xyz="1 0 0" rpy="0 1.571 0" />
+  <origin xyz="${L2/2} 0 0" rpy="0 1.571 0" />
    <geometry>
      <cylinder radius="${R2}" length="${L2}" />
    </geometry>
@@ -88,7 +88,7 @@
   </visual>
 
   <collision>
-     <origin xyz="1 0 0" rpy="0 1.571 0" />
+     <origin xyz="${L2/2} 0 0" rpy="0 1.571 0" />
   <geometry>
      <cylinder radius="${R2}" length="${L2}" />
   </geometry>
