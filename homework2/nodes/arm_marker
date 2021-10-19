@@ -6,9 +6,9 @@ import geometry_msgs.msg
 from visualization_msgs.msg import Marker
 
 def main():
-    r = rospy.Rate(1000)
-    i=0
     T = rospy.get_param("T")
+    r = rospy.Rate(T)
+    i=0
     pub = rospy.Publisher('visualization_marker', Marker, queue_size=10)
     buffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(buffer)

@@ -1,19 +1,10 @@
 <launch>
-    <!-- <arg name="use_jsp" default = 'false' /> -->
+        <arg name="use_jsp" default = "false"/>   
 
-    <!-- <group if="$(eval arg ('use_jsp') == 'false')"> -->
         <node name="rviz" pkg ="rviz" type="rviz" args="-d $(find homework2)/config/rviz_part2.rviz"/>
         <param name="robot_description" command="$(find xacro)/xacro $(find homework2)/twoarm.urdf.xacro"/> 
         <rosparam command="load" file="$(find homework2)/config/arm.yaml" />   
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-        <node name="arm_traj" pkg="homework2" type="arm_traj" />
-    <!-- </group> -->
-
-    <!-- <group if="$(eval arg ('use_jsp') == 'true ')">
-        <param name="robot_description" command="$(find xacro)/xacro $(find homework2)/twoarm.urdf.xacro"/>    
-        <node name="rviz" pkg ="rviz" type="rviz" />
-        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-        <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
-    </group> -->
-
+        <node name="arm_traj" pkg="homework2" type="arm_traj" unless="$(arg use_jsp)"/>
+        <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(arg use_jsp)"/>
 </launch>
