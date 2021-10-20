@@ -46,7 +46,7 @@ class trajectory():
         #Calculate theta at t = 0 and return theta as a float value
         self.x, self.x_dot, self.x_ddot = trajectory(self.W,self.H,self.T).calc_x()
         self.y, self.y_dot, self.y_ddot = trajectory(self.W,self.H,self.T).calc_y()
-        theta0_eq = sqrt(self.x_dot**2 + self.y_dot**2)
+        theta0_eq = atan(self.y_dot / self.x_dot)
         theta0_func = sym.lambdify(self.t,theta0_eq,modules=sym)
         theta0 = theta0_func(0)
         return theta0
