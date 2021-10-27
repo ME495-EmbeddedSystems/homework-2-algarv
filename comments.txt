@@ -1,0 +1,68 @@
+
+To see my changes: use git diff --word-diff main graded
+To merge my changes: (from main branch) git merge graded
+To delete graded branch locally: git branch -d graded
+To delete graded branch remotely: git push -d origin graded
+
+README.md?
+      
+catkin_lint?
+__pycache__ does not belong in git repository -0.1
+
+Part I
+trajectory node
+1. Publishes cmd_vel at fixed frequency
+2. Broadcasts static transform from world -> odom
+3. pause service
+4. resume service
+5. Parameters:
+   width height period ~pub_freq
+
+Instead of an if statement and two publishers, you should publish on /cmd_vel and
+<remap> topics appropriately in the launchfile. -0.2
+
+simodom
+1. turtlesim/Pose subscriber
+2. nav_msgs/Odometry publisher
+3. odom->base_footprint broadcaster
+4. Frames oriented correctly
+
+
+src/homework2 python package
+- Computes the trajectory properly
+- Calculations are shown
+[use docstrings rather than comments for each of your functions] -0.1
+
+catkin_make run_tests
+- Proper tests provided
+[one of the tests fails] -0.1
+[Yes, you almost never compare  floating point numbers directly, often you
+check that they are within an espilon of each other.
+python provides an assertAlmostEqual for this purpose
+
+
+trajectory.yaml
+turtle_view.rviz
+
+figure_eight.launch
+    mode option
+
+
+Videos:
+    screencast in rviz
+    figure eight in turtlesim
+    figure eight in realife
+    Video is gif or as a sharing site
+
+
+Part II
+twoarm.urdf.xacro
+    - uses lengths from config/arm/yaml.
+arm_basics.launch
+    - works and visualizes the robot
+arm_traj
+    - makes arm follow trajectory
+arm_marker:
+    properly displays the markers
+arm_mark.launch
+    - uses include tag
